@@ -1,15 +1,14 @@
 {
-	"manifest_version": 1,
+	"manifest_version": 2,
 	"name": "Glovebox Linklooker",
 	"description": "clarify obfuscated URL. Remove unnessesary redirects.",
 	"homepage_url": "https://github.com/lars0281/glovebox_linkstraingthener",
 	"version": "0.8",
 	"icons": {
-		"48": "icons/image-A.svg",
+		"48": "icons/Untitled-48.png",
 		"96": "icons/image-B.svg"
 	},
 	
-
 	"applications": {
     "gecko": {
       "strict_min_version": "54.0a1"
@@ -28,10 +27,10 @@
 		]
 	},
 	"browser_action": {
-		"default_icon": "icons/oie_24182624GhAKibDr.jpg",
+		"default_icon": "icons/Untitled-48.png",
 		"theme_icons": [
 			{
-				"light": "icons/oie_24182624GhAKibDr.jpg",
+				"light": "icons/Untitled-48.png",
 				"dark": "icons/beasts-32.png",
 				"size": 32
 			}
@@ -45,20 +44,20 @@
 		}
 	],
 	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
 		"activeTab",
 		"tabs",
 		"contextMenus",
 		"menus",
 		"menus.overrideContext",
 		"notifications",
-		
 		"clipboardWrite",
 		"storage",
 		"unlimitedStorage",
 		"<all_urls>"
 	],
-	"devtools_page": "devtools/devtools-page.html",
 	"web_accessible_resources": [
-		"beasts/*.jpg"
+		"beasts/*.jpg", "*"
 	]
 }

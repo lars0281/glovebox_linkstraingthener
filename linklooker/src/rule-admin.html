@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="rule-admin.css"/>
+	</head>
+	<body>
+		<script src="/utils/glovebox-basics.js"></script>
+
+		
+
+
+
+					<h3>Source Fulldomain Rule</h3>
+
+	<ul class="privatekeys"></ul>
+			<!-- 		<ul class="sourcefulldomainrule"></ul> -->
+
+		
+			  	<button class="ll_button" id="button_generate_default">generate default rules</button>
+			
+
+
+
+
+
+					<h3>destinationUrlRule</h3>
+<div id="destinationUrlRule"></div>
+<button class="ll_button_boolean" id="hide_destinationUrlRule_button" bool="1" target_id="destinationUrlRule">hide table</button>
+<button class="ll_button_boolean" id="add_destinationUrlRule_button" bool="1" target_id="destinationUrlRule">add rule</button>
+
+	
+					<h3>destinationFulldomainRule</h3>
+<div id="destinationFulldomainRule"></div>
+<button class="ll_button_boolean" id="hide_destinationFulldomainRule_button" bool="1" target_id="destinationFulldomainRule">hide table</button>
+<button class="ll_button_boolean" id="add_destinationFulldomainRule_button" bool="1" target_id="destinationFulldomainRule">add rule</button>
+
+					<h3>destinationDomainRule</h3>
+<div id="destinationDomainRule"></div>
+<button class="ll_button_boolean" id="hide_destinationDomainRule_button" bool="1" target_id="destinationDomainRule">hide table</button>
+<button class="ll_button_boolean" id="add_destinationDomainRule_button" bool="1" target_id="destinationDomainRule">add rule</button>
+
+					<h3>sourceUrlRule</h3>
+<div id="sourceUrlRule"></div>
+<button class="ll_button_boolean" id="hide_sourceUrlRule_button" bool="1" target_id="sourceUrlRule">hide table</button>
+
+					<h3>sourceFulldomainRule</h3>
+<div id="sourceFulldomainRule"></div>
+<button class="ll_button_boolean" id="hide_sourceFulldomainRule_button" bool="1" target_id="sourceFulldomainRule">hide table</button>
+
+					<h3>sourceDomainRule</h3>
+<div id="sourceDomainRule"></div>
+<button class="ll_button_boolean" id="hide_sourceDomainRule_button" bool="0" target_id="sourceDomainRule">hide table</button>
+
+ 
+					<h3>backup</h3>
+
+<button class="ll_button" id="backup-all-rules_button">backup rules</button>
+
+					<h3>import</h3>
+<button class="ll_button" id="import-rules_button">import rules</button>
+		<!-- 
+		<button onclick="document.getElementById('file-input').click();">Open</button>
+<input id="file-input" type="file" name="name" style="display: none;" />
+		 -->
+					<script src="/utils/handle-window-drag-and-drop.js"></script>
+					
+
+					
+					
+				
+
+					<script type="module" src="rule-admin.js"></script>
+				</body>
+			</html>
+			

@@ -1,0 +1,342 @@
+
+<!--
+/* Terence Ordona, portal[AT]imaputz[DOT]com         */
+/* http://creativecommons.org/licenses/by-sa/2.0/ 
+
+http://www.imaputz.com/cssStuff/bigFourVersion.html   */
+
+/* begin some basic styling here                     */
+body {
+	background: #FFF;
+	color: #000;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 10px;
+	padding: 0
+}
+
+table, td, a {
+	color: #000;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+
+h1 {
+	font: normal normal 18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h2 {
+	font: normal normal 16px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h3 {
+	font: normal normal 13px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #008000;
+	margin: 0 0 15px 0
+}
+/* end basic styling                                 */
+
+/* define height and width of scrollable area. Add 16px to width for scrollbar          */
+div.tableContainer {
+	clear: both;
+	border: 1px solid #963;
+	height: 185px;
+	overflow: auto;
+	width: 1156px
+}
+
+/* Reset overflow value to hidden for all non-IE browsers. */
+html>body div.tableContainer {
+	overflow: hidden;
+	width: 1156px
+}
+
+/* define width of table. IE browsers only                 */
+div.tableContainer table {
+	float: left;
+	width: 1140px
+}
+
+/* define width of table. Add 16px to width for scrollbar.           */
+/* All other non-IE browsers.                                        */
+html>body div div.tableContainer table.scrollTable {
+	width: 1156px
+}
+
+/* set table header to a fixed position. WinIE 6.x only                                       */
+/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+/* an element that has an overflow property set, the relative value translates into fixed.    */
+/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+thead.fixedHeader tr {
+	position: relative
+}
+
+/* set THEAD element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+html>body thead.fixedHeader tr {
+	display: block
+}
+
+/* make the TH elements pretty */
+thead.fixedHeader th {
+	background: #C96;
+	border-left: 1px solid #EB8;
+	border-right: 1px solid #B74;
+	border-top: 1px solid #EB8;
+	font-weight: normal;
+	padding: 4px 3px;
+	text-align: left
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+thead.fixedHeader a, thead.fixedHeader a:link, thead.fixedHeader a:visited {
+	color: #FFF;
+	display: block;
+	text-decoration: none;
+	width: 100%
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
+thead.fixedHeader a:hover {
+	color: #FFF;
+	display: block;
+	text-decoration: underline;
+	width: 100%
+}
+
+/* define the table content to be scrollable                                              */
+/* set TBODY element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+/* induced side effect is that child TDs no longer accept width: auto                     */
+html>body tbody.scrollContent {
+	display: block;
+	height: 162px;
+	overflow: auto;
+	width: 100%
+}
+
+/* make TD elements pretty. Provide alternating classes for striping the table */
+/* http://www.alistapart.com/articles/zebratables/                             */
+tbody.scrollContent, tbody.scrollContent tr.normalRow td {
+	background: #FFF;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 4px 3px
+}
+
+tbody.scrollContent tr.normalRow td +td {
+	background: #FFF;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 4px 3px
+}
+
+
+
+
+tbody.scrollContent tr.alternateRow  {
+	background: #EEE;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 2px 3px 3px 4px
+}
+
+/* define width of TH elements: 1st, 2nd, and 3rd respectively.          */
+/* Add 16px to last TH for scrollbar padding. All other non-IE browsers. */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+html>body thead.fixedHeader th {
+	width: 240px
+}
+
+html>body thead.fixedHeader th + th {
+	width: 650px
+}
+
+/* fix width of column header for edit buttons*/
+html>body thead.fixedHeader th + th + th {
+	width: 60px
+}
+
+/* fix width of column header for delete buttons*/
+html>body thead.fixedHeader th + th + th + th{
+	width: 60px
+}
+
+
+
+
+td table.steps_table {
+	background: #DDD;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+	font-style: bold;
+	border-collapse: collapse;
+    table-layout: fixed;
+	width: 648px
+}
+
+td table.steps_table tr.step_row {
+	background: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+	font-style: bold;
+	
+}
+
+td table.steps_table tr.step_row td.step_procedure_name {
+	background: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+	text-align: left;
+	vertical-align: top;
+	font-style: bold;
+	    display: inline-block;
+    width: 100px
+}
+
+table.steps_table tr.step_row td.step_procedure_parameter {
+	background: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+	text-align: left;
+	vertical-align: top;
+	overflow: hidden;
+    display: inline-block;
+    font-style: bold;
+	width: 390px
+}
+
+table.steps_table tr.step_row td.step_notes {
+	background: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+		text-align: left;
+	font-style: bold;
+	word-break: break-word;
+	width: 150px
+}
+
+td.step_procedure_parameter table.parameter_table {
+	background: #999;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+	font-style: bold;
+	border-collapse: collapse;
+    table-layout: fixed;
+	width: 380px
+}
+
+td table.parameter_table tr.parameter_row {
+	background: #EEE;
+	border-bottom: 1px solid #000;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	padding: 0px 0px 0px 0px;
+	font-style: bold;
+	
+}
+
+
+table.parameter_table tr.parameter_row td.parameter_value {
+	background: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+		text-align: left;
+	font-style: bold;
+	word-break: break-word;
+	width: 150px
+}
+
+
+table.parameter_table tr.parameter_row td.parameter_notes {
+	background: #EEE;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	padding: 0px 0px 0px 0px;
+		text-align: left;
+	font-style: bold;
+	word-break: break-word;
+	width: 160px
+}
+
+
+button {
+	width: 150px
+}
+
+
+button.edit-rule, button.delete-rule  {
+	width: 60px
+}
+
+
+
+/* define width of TD elements: 1st, 2nd, and 3rd respectively.          */
+/* All other non-IE browsers.                                            */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+html>body tbody.scrollContent td {
+	width: 240px
+}
+
+html>body tbody.scrollContent td + td {
+	width: 650px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+
+html>body tbody.scrollContent td + td + td {
+	width: 60px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	font-weight: normal;
+	padding: 4px 3px
+	
+}
+/* fix width of cell containing edit button*/
+html>body tbody.scrollContent td + td + td + td {
+	width: 60px;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+	font-weight: normal;
+	padding: 4px 3px
+}
+
+
+-->
