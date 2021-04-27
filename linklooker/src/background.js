@@ -374,7 +374,7 @@ function reveal_true_url_endpoint(info, tab) {
     var linkText = info.linkText;
 
     console.log("urlendpoint: " + info.linkUrl);
-    console.log("tabId: " + tabId);
+   // console.log("tabId: " + tabId);
 
     console.log("location page: " + info.pageUrl);
 
