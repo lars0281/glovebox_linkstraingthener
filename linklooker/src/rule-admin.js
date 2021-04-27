@@ -1293,7 +1293,7 @@ function writeTableRow(rule, column_conf, type, key) {
                               if (presentation_format == "table"){
                             	  // create a small table to contain the list
 
-                            	  var list_table = createTable( cell_data_row[cell_data_path] , cell_table_column_conf.cell_table_conf.table_conf , cell_table_column_conf.cell_table_conf.row_conf, cell_table_column_conf.cell_table_conf.column_conf );
+                            	  var list_table = createTable( cell_data_row[cell_data_path], cell_table_column_conf.cell_table_conf.table_conf, cell_table_column_conf.cell_table_conf.row_conf, cell_table_column_conf.cell_table_conf.column_conf);
 	// console.log(list_table);
                             	  cell_table_cell.appendChild(list_table);
     
