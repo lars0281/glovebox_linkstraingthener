@@ -169,10 +169,7 @@ function setup_dialog_window(node, new_url, linkUrl) {
 		// it2.setAttribute("style", 'position: absolute;z-index:-1;top: 0;left:
 		// 0;font: normal 9pt sans-serif;padding: 3px;border: solid
 		// 0px;background: rgba(225, 225, 225, 0.9);');
-		it2
-				.setAttribute(
-						"style",
-						'position: relative;z-index:-1;top: 0;left: 0;font: normal 9pt sans-serif;text-align: left;wordWrap=break-word;padding: 8px;border: solid 1px;background: rgba(225, 225, 225, 0.9);');
+		it2.setAttribute("style", 'position: relative;z-index:-1;top: 0;left: 0;font: normal 9pt sans-serif;text-align: left;wordWrap=break-word;padding: 8px;border: solid 1px;background: rgba(225, 225, 225, 0.9);');
 
 		var posX = 150;
 		var posY = 20;
@@ -188,17 +185,48 @@ function setup_dialog_window(node, new_url, linkUrl) {
 		var i = 0;
 		while (i < new_url.length) {
 
-			display_text_for_url = display_text_for_url
-					+ new_url.substring(i, i + chars_per_row) + " ";
+			display_text_for_url = display_text_for_url + new_url.substring(i, i + chars_per_row) + " ";
 			i = i + chars_per_row;
 		}
 
-		it2.innerHTML = '<table><tr><td style="width: 200px;text-align: left">This link ends up at </td><td style="width: 100px;text-align: right" id="gloveboxtooltipclose">close [X]</td></tr></table><a href="'
-				+ new_url
-				+ '" >'
-				+ display_text_for_url
-				+ '</a>'
-				+ '<br/><br/>go there directly by just clicking on this link';
+		var cont1 = document.createElement('container');
+		var tab1 = document.createElement('table');
+
+		var tr1 = document.createElement('tr');
+
+		var td1 = document.createElement('td');
+		td1.appendChild(document.createTextNode('This link ends up at '));
+		td1.setAttribute("style", 'width: 200px;text-align: left');
+		var td2 = document.createElement('td');
+		td2.appendChild(document.createTextNode('close [X]'));
+		td2.setAttribute("style", 'width: 100px;text-align: right');
+		td2.setAttribute("id", 'gloveboxtooltipclose');
+		tr1.appendChild(td1);
+		tr1.appendChild(td2);
+		tab1.appendChild(tr1);
+
+		cont1.appendChild(tab1);
+
+		var a1 = document.createElement('a');
+		a1.appendChild(document.createTextNode(display_text_for_url));
+		a1.setAttribute("href", new_url);
+
+		cont1.appendChild(a1);
+
+		var br1 = document.createElement('br');
+		cont1.appendChild(br1);
+		var br2 = document.createElement('br');
+		cont1.appendChild(br2);
+
+		cont1.appendChild(document.createTextNode('2 go there directly by just clicking on this link 2'));
+
+		// it2.innerHTML = '<table><tr><td style="width: 200px;text-align:
+		// left">This link ends up at </td><td style="width: 100px;text-align:
+		// right" id="gloveboxtooltipclose">close [X]</td></tr></table><a
+		// href="' + new_url + '" >' + display_text_for_url + '</a>'
+		// + '<br/><br/>go there directly by just clicking on this link';
+		// it2.appendChild(tab1);
+		it2.appendChild(cont1);
 		// there directly by just clicking on this link
 
 		// '<p class="gloveboxtooltip" id="gloveboxtooltipclose"
@@ -239,8 +267,7 @@ function setup_dialog_window(node, new_url, linkUrl) {
 
 		// it = it2;
 
-		if ((it2.style.top == '' || it2.style.top == 0 || it2.style.top == "0px")
-				&& (it2.style.left == '' || it2.style.left == 0 || it2.style.left == "0px")) {
+		if ((it2.style.top == '' || it2.style.top == 0 || it2.style.top == "0px") && (it2.style.left == '' || it2.style.left == 0 || it2.style.left == "0px")) {
 			// need to fixate default size (MSIE problem)
 			it2.style.width = it2.offsetWidth + 'px';
 			it2.style.height = it2.offsetHeight + 'px';

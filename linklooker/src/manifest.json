@@ -1,63 +1,56 @@
 {
-	"manifest_version": 2,
-	"name": "Glovebox Linklooker",
-	"description": "clarify obfuscated URL. Remove unnessesary redirects.",
-	"homepage_url": "https://github.com/lars0281/glovebox_linkstraingthener",
-	"version": "0.8",
-	"icons": {
-		"48": "icons/Untitled-48.png",
-		"96": "icons/image-B.svg"
-	},
-	
-	"applications": {
-    "gecko": {
-      "strict_min_version": "54.0a1"
-    }
-  },
-	"browser_specific_settings": {
-		"gecko": {
-			"id": "linklooker@glovebox.com",
-			"strict_min_version": "42.0"
-		}
-	},
+    "manifest_version": 2,
+    "name": "Link Looker",
+    "author": "Glovebox Team",
+    "description": "To clarify obfuscated URLs, to bypass unnessesary redirects and to remove tracking information embedded in link. Made by Glovebox",
+    "homepage_url": "https://github.com/lars0281/glovebox_linkstraingthener",
+    "version": "1.0.0",
+    "icons": {
+        "48": "icons/LL-48.png",
+        "96": "icons/LL-96.png"
+    },
 
-	"background": {
-		"scripts": [
-			"background.js"
-		]
-	},
-	"browser_action": {
-		"default_icon": "icons/Untitled-48.png",
-		"theme_icons": [
-			{
-				"light": "icons/Untitled-48.png",
-				"dark": "icons/beasts-32.png",
-				"size": 32
-			}
-		],
-		"default_title": "Glovebox linklooker"
-	},
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["./background.js" ]
-		}
-	],
-	"permissions": [
-		"webRequest",
-		"webRequestBlocking",
-		"activeTab",
-		"tabs",
-		"contextMenus",
-		"menus",
-		"menus.overrideContext",
-		"notifications",
-		"clipboardWrite",
-		"storage",
-		"unlimitedStorage",
-		"<all_urls>"
-	],
-	"web_accessible_resources": [
-		"beasts/*.jpg", "*"
-	]
+    "applications": {
+        "gecko": {
+            "strict_min_version": "54.0a1"
+        }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "linklooker@glovebox.com",
+            "strict_min_version": "63.0"
+        }
+    },
+    "browser_action": {
+       "browser_style": true,
+        "default_icon": "icons/LL-177.png",
+        "theme_icons": [{
+                "light": "icons/LL-32.png",
+                "dark": "icons/LL-32.png",
+                "size": 32
+            }
+        ],
+        "default_title":"Link Looker: To clarify obfuscated URLs, to bypass unnessesary redirects and to remove tracking information embedded in link."
+    },
+
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "content_scripts": [{
+            "matches": ["<all_urls>"],
+            "js": ["content_scripts/RevealUrl.js"]
+        }
+    ],
+    "permissions": [
+        "webRequest",
+        "activeTab",
+        "tabs",
+        "contextMenus",
+        "storage",
+        "unlimitedStorage",
+        "<all_urls>"
+    ]
+
 }

@@ -1,5 +1,5 @@
 
-<!--
+
 /* Terence Ordona, portal[AT]imaputz[DOT]com         */
 /* http://creativecommons.org/licenses/by-sa/2.0/ 
 
@@ -179,7 +179,6 @@ td table.steps_table {
 	border-right: 1px solid #000;
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
-	font-style: bold;
 	border-collapse: collapse;
     table-layout: fixed;
 	width: 648px
@@ -192,7 +191,6 @@ td table.steps_table tr.step_row {
 	border-right: 1px solid #000;
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
-	font-style: bold;
 	
 }
 
@@ -205,7 +203,6 @@ td table.steps_table tr.step_row td.step_procedure_name {
 	padding: 0px 0px 0px 0px;
 	text-align: left;
 	vertical-align: top;
-	font-style: bold;
 	    display: inline-block;
     width: 100px
 }
@@ -221,8 +218,7 @@ table.steps_table tr.step_row td.step_procedure_parameter {
 	vertical-align: top;
 	overflow: hidden;
     display: inline-block;
-    font-style: bold;
-	width: 390px
+  	width: 390px
 }
 
 table.steps_table tr.step_row td.step_notes {
@@ -233,8 +229,7 @@ table.steps_table tr.step_row td.step_notes {
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
 		text-align: left;
-	font-style: bold;
-	word-break: break-word;
+		word-break: break-word;
 	width: 150px
 }
 
@@ -245,7 +240,6 @@ td.step_procedure_parameter table.parameter_table {
 	border-right: 1px solid #000;
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
-	font-style: bold;
 	border-collapse: collapse;
     table-layout: fixed;
 	width: 380px
@@ -258,7 +252,6 @@ td table.parameter_table tr.parameter_row {
 	border-right: none;
 	border-top: none;
 	padding: 0px 0px 0px 0px;
-	font-style: bold;
 	
 }
 
@@ -271,7 +264,6 @@ table.parameter_table tr.parameter_row td.parameter_value {
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
 		text-align: left;
-	font-style: bold;
 	word-break: break-word;
 	width: 150px
 }
@@ -285,7 +277,6 @@ table.parameter_table tr.parameter_row td.parameter_notes {
 	border-top: 1px solid #000;
 	padding: 0px 0px 0px 0px;
 		text-align: left;
-	font-style: bold;
 	word-break: break-word;
 	width: 160px
 }
@@ -309,6 +300,7 @@ html>body tbody.scrollContent td {
 	width: 240px
 }
 
+
 html>body tbody.scrollContent td + td {
 	width: 650px;
 	border-left: 1px solid #000;
@@ -316,6 +308,7 @@ html>body tbody.scrollContent td + td {
 	border-top: 1px solid #000;
 	border-bottom: 1px solid #000;
 }
+
 
 html>body tbody.scrollContent td + td + td {
 	width: 60px;
@@ -327,6 +320,8 @@ html>body tbody.scrollContent td + td + td {
 	padding: 4px 3px
 	
 }
+
+
 /* fix width of cell containing edit button*/
 html>body tbody.scrollContent td + td + td + td {
 	width: 60px;
@@ -339,4 +334,3 @@ html>body tbody.scrollContent td + td + td + td {
 }
 
 
--->

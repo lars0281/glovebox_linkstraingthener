@@ -1,0 +1,5 @@
+{
+	"extensionName": {"message": "Link Looker"},
+	"extensionDescription": {"message": "Reveal The True Endpoint of a Link and edit out tracking cookies on the way there."},
+	"extension_long_Description":{"message": "The addon is still being programmed. It is far from perfect. Please report bugs or ideas to https://github.com/Nitrama/HTTP-Header-Live. App from Glovebox)"}
+}

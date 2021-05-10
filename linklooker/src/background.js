@@ -7,38 +7,81 @@ let db;
 
 let indexedDB;
 
-// databases, datastores, key
+// databases:
 
-// key stores
+// Apr 28 2021
 
-// gloveboxKeys decryptionKeys keyPath
-// gloveboxKeys encryptionKeys keyId
-// privateKeys keyPairs keyId
 
-// transaction stores
-
-// encryptionKeysSecureOffers createdKeyOffers refId
-
-// Mar 18 2021
+/*
+ * Apply rules to determine where link end up. Some links result in redirect,
+ * but in the querystring there are values to indicate what the redirect URL
+ * will be. Use rules to compute this URL without having to call the URL.
+ * 
+ * Lookup link to check if ends in a redirect (use HTTP HEAD method)
+ * 
+ * Apply controls to HTTP cookie
+ * 
+ * 
+ * Control cookies
+ * 
+ * Rules to which cookies to never send and allways send Rules scoped for
+ * domain, fulldomain and URL
+ * 
+ * Purpose to achieve with this functionality.
+ * 
+ * 1) Always send the cookie to a server to avoid being confronted by
+ * GPDR-mandated cookie acceptance form. Where these forms are prompted by a
+ * missing cookie, clearing cookies will mean that the user is repeatedly asked
+ * to accept cookies. Permanently setting the cookie will avoid this nuisance.
+ * 
+ * Example www.youtube.com After the user click to concent to cookies, this is
+ * returned to the browser set-cookie:
+ * CONSENT=YES+cb.20210425-18-p0.en-GB+FX+944; Domain=.youtube.com; Expires=Sun,
+ * 10-Jan-2038 07:59:59 GMT; Path=/; Secure; SameSite=none
+ * 
+ * Send this cookie from then on: CONSENT=YES+cb.20210425-18-p0.en-GB+FX+944;
+ * Note the seemingly random data after "YES". it contains a timestamp and some
+ * other sender specific data. The rules must have a language to compute this
+ * value as needed.
+ * 
+ * 
+ * 2) Some services have a "first one is free" setup where the user is entitled
+ * to see a limited number of something, but once the limit has been exceeded is
+ * required to login
+ * 
+ * 
+ * Example www.nytimes.co m
+ * 
+ * 
+ */
 
 
 // context menu related
 
 
-// to add context menu item for links
+/*
+ * to add context menu item for analysing links Added in v 1.0
+ */
+
 browser.contextMenus.create({
     id: "glovebox-link-reveal",
     title: "reveal the true endpoint of URL",
     contexts: ["link"]
 });
 
-// handler for messages sent from
-// browser.runtime.onMessage.addListener(function(message,sender,sendResponse){
-// alert(message.data);
-// console.log("#### message received");
-// chrome.runtime.sendMessage({data:datax},function(response){
+/*
+ * Add context menu item for selection. User may select a text and have this
+ * menuitem appear when righ-cliking on the selection The selection is sent
+ * verbatim to search engine and top three results are presented in a message
+ * box. Added in v 1.1
+ */
+// browser.contextMenus.create({
+// id: "selected-text-lookup",
+// title: "send text to search engine",
+// contexts: ["selection"]
 // });
-// });
+
+
 
 
 indexedDB = window.indexedDB || window.webkitIndexedDB ||
@@ -46,15 +89,52 @@ indexedDB = window.indexedDB || window.webkitIndexedDB ||
 
 // listener for message sent from the admin page of the plugin
 browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+	   console.log("message:" + JSON.stringify(message));
+	   console.log("sender:" + JSON.stringify(sender));
+	   console.log("sendResponse:" + sendResponse);
 
     console.log("received from page:  message: " + JSON.stringify(message) + " message.type=" + message.type);
 
+    
+    console.log("request:" + message[0]);
     console.log("request:" + message.request);
+
+    console.log("request:" + JSON.stringify(message.request));
+    console.log("request:" + JSON.stringify(message.request.sendRule));
+
+    console.log("request:" + message.request.sendRule);
 
     console.log("request:" + message.linkurl);
 
     try {
 
+        if (message.request.sendRule == 'toEditPopup') {
+            console.log("contact edit popup:");
+
+            var page_message = message.message;
+            console.log("page_message:" + page_message);
+            // Simple example: Get data from extension's local storage
+            // var result = localStorage.getItem('whatever');
+            
+            
+            
+            var result = JSON.parse('{"test":"one"}');
+            // Reply result to content script
+            sendResponse(result);
+        }
+
+    
+} catch (e) {
+    console.log(e);
+}
+
+    try {
+
+    	// make call to rule editing popup containing the rule to display in it.
+    	
+    	
+    	
+    	
         if (message && message.type == 'page') {
             console.log("page_message:");
             var page_message = message.message;
@@ -96,18 +176,28 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
     console.log("background.js: browser.contextMenus.onClicked.addListener:tab:" + JSON.stringify(tab));
 
     /*
-	 * WHen the user has selected from the context meny to revel the true end
+	 * When the user has selected from the context meny to revel the true end
 	 * point of a url
 	 * 
 	 */
-    if (info.menuItemId === "glovebox-link-reveal") {
+    if (info.menuItemId == "glovebox-link-reveal") {
         console.log("glovebox-link-reveal");
         // console.log(info);
         // console.log(tab);
         reveal_true_url_endpoint(info, tab);
 
+    }else if (info.menuItemId == "selected-text-lookup") {
+        console.log("selected-text-lookup");
+        // console.log(info);
+        // console.log(tab);
+        selected_text_lookup(info, tab);
+
     }
 
+    
+    
+    
+    
     console.log("#### request completed");
 });
 
@@ -118,14 +208,13 @@ browser.browserAction.onClicked.addListener(() => {
     browser.tabs.create({
         url: "/rule-admin.html"
     });
-    // can replace the above with a direct referal to this html in the manifest
+    // Can replace the above with a direct referal to the html, in the manifest.
     // - but this would not provide a full tab-page
     // "brower_action": {
     // "default_popup": "navigate-collection.html"
 
 });
 
-console.log("1.1.1");
 
 var request = indexedDB.open("sourceFulldomainRuleDB", 1);
 request.onupgradeneeded = function (event) {
@@ -346,7 +435,19 @@ function skinny_lookup(url, info) {
         // console.log(xhr);
         console.log(e);
     }
+}
 
+
+
+
+/*
+ * 
+ */
+
+function selected_text_lookup(info, tab) {
+	  console.log("#start: selected_text_lookup");
+	  console.log(info);
+	  console.log(tab);
 }
 
 // receive notice when user rightclick on a link and selects "reveal the true
@@ -457,12 +558,12 @@ function reveal_true_url_endpoint(info, tab) {
         
         return rules_enforcement(info.pageUrl, true_destination_url);
     }).then(function (res) {
-console.log(res);    	
+console.log(res);
          true_destination_url = res;
         
 
         return browser.tabs.executeScript(tabId, {
-            file: "RevealUrl.js",
+            file: "content_scripts/RevealUrl.js",
             frameId: frameId
         });
 
@@ -859,6 +960,7 @@ function loadFromIndexedDB_async(dbName, storeName, id) {
     });
 }
 
+
 function execute_rule(rule, url) {
     var new_url = "";
     new_url = url;
@@ -1002,6 +1104,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.google.com/',
                 sourceFulldomain: 'https://www.google.com/',
+                url_match: 'https://www.google.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -1022,6 +1127,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.facebook.com/',
                 sourceFulldomain: 'https://www.facebook.com/',
+                url_match: 'https://www.facebook.com/',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1039,6 +1147,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceDomainRuleDB', 'sourceDomainRuleStore', 'keyId', {
                 keyId: 'google.com',
                 sourceDomain: 'google.com',
+                url_match: 'google.com',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1055,6 +1166,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceDomainRuleDB', 'sourceDomainRuleStore', 'keyId', {
                 keyId: 'facebook.com',
                 sourceDomain: 'facebook.com',
+                url_match: 'facebook.com',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1079,6 +1193,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.imdb.com/',
                 sourceFulldomain: 'https://www.imdb.com/',
+                url_match: 'https://www.imdb.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1095,7 +1212,10 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.linkedin.com/',
                 sourceFulldomain: 'https://www.linkedin.com/',
-                steps: [{
+                url_match: 'https://www.linkedin.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
+                 steps: [{
                     procedure: "regexp",
                     parameters: [{
                             value: "s/(utm|hsa)_[a-z]*=[^&]*//g",
@@ -1106,19 +1226,22 @@ function generate_default_link_rules() {
                 },{
                     procedure: "regexp",
                     parameters: [{
-                            value: "s/trackingId=[^&]*//g",
-                            notes: "delete trackingId from querystring"
+                            value: "s/[&]*li_fat_id=[^&]*//g",
+                            notes: "delete qs parameter with named li_fat_id"
                         }
                     ],
-                    notes: "remove tracking token from querystring"
+                    notes: "remove extraneous parameter from querystring"
                 }
                 ],
-                notes: '',
+                notes: 'test',
                 createtime: '202001010001'
             }));
         p.push(saveToIndexedDB_async('destinationDomainRuleDB', 'destinationDomainRuleStore', 'keyId', {
                 keyId: 'ct.sendgrid.net',
                 destinationDomain: 'ct.sendgrid.net',
+                url_match: 'ct.sendgrid.net',
+                scope: 'Domain',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1135,6 +1258,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.facebook.com/',
                 destinationFulldomain: 'https://www.facebook.com/',
+                url_match: 'https://www.facebook.com/',
+                scope: 'Fulldomain',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -1151,7 +1277,18 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'http://ad.doubleclick.net/',
                 destinationFulldomain: 'http://ad.doubleclick.net/',
+                url_match: 'http://ad.doubleclick.net/',
+                scope: 'Fulldomain',
+                direction: 'destination',
                 steps: [{
+                        procedure: "regexp",
+                        parameters: [{
+                                value: "sD.*(http[s]*://[^&]*).*D$1Dg",
+                                notes: "test"
+                            }
+                        ],
+                        notes: "test"
+                    }, {
                         procedure: "regexp",
                         parameters: [{
                                 value: "sD\\?.*DDg",
@@ -1167,6 +1304,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
             keyId: 'https://www.linkedin.com/',
             destinationFulldomain: 'https://www.linkedin.com/',
+            url_match: 'https://www.linkedin.com/',
+            scope: 'Fulldomain',
+            direction: 'destination',
             steps: [{
                 procedure: "regexp",
                 parameters: [{
@@ -1180,6 +1320,8 @@ function generate_default_link_rules() {
             notes: 'remove tracker',
             createtime: '202001010001'
         }));
+
+
         // boil
         // https://ad.doubleclick.net/ddm/trackclk/N1114924.158707LINKEDIN/B25010089.299078854;dc_trk_aid=491804324;dc_trk_cid=142315430;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=$%7BGDPR%7D;gdpr_consent=$%7BGDPR_CONSENT_755%7D;ltd=?li_fat_id=e1558f7d-a9f8-41dc-9c34-a654161f74be
         // https://ad.doubleclick.net/ddm/trackclk/N1114924.158707LINKEDIN/B25010089.299078854;dc_trk_aid=491804324;dc_trk_cid=142315430;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=$(GDPR);gdpr_consent=(GDPR_CONSENT_755);ltd=?li_fat_id=e1558f7d-a9f8-41dc-9c34-a654161f74be
@@ -1192,6 +1334,10 @@ function generate_default_link_rules() {
 
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'https://ad.doubleclick.net',
+                destinationFulldomain: 'https://ad.doubleclick.net',
+                url_match: 'https://ad.doubleclick.net',
+                scope: 'Fulldomain',
+                direction: 'destination',
                 destinationFulldomain: 'https://ad.doubleclick.net',
                 steps: [{
                         procedure: "regexp",
@@ -1218,6 +1364,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://l.facebook.com/l.php',
                 destinationUrl: 'https://l.facebook.com/l.php',
+                url_match: 'https://l.facebook.com/l.php',
+                 scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -1242,6 +1391,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.google.com/url',
                 destinationUrl: 'https://www.google.com/url',
+                url_match: 'https://www.google.com/url',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -1265,6 +1417,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://ideas-admin.lego.com/mailing/email_link',
                 destinationUrl: 'https://ideas-admin.lego.com/mailing/email_link',
+                url_match: 'https://ideas-admin.lego.com/mailing/email_link',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -1303,6 +1458,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://dagsavisen.us11.list-manage.com/track/click',
                 destinationUrl: 'https://dagsavisen.us11.list-manage.com/track/click',
+                url_match: 'https://dagsavisen.us11.list-manage.com/track/click',
+                 scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "replace_with",
                         parameters: [{
@@ -1325,15 +1483,10 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.youtube.com/watch',
                 destinationUrl: 'https://www.youtube.com/watch',
+                url_match: 'https://www.youtube.com/watch',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
-                        procedure: "regexp",
-                        parameters: [{
-                                value: "sD(\\?v=[^&]*).*D$1Dg",
-                                notes: "sed statement to remove all but the v parameter"
-                            }
-                        ],
-                        notes: "youtube videos should be short, leave only v parameter in query string"
-                    },{
                         procedure: "regexp",
                         parameters: [{
                                 value: "sD(\\?v=[^&]*).*D$1Dg",
@@ -1349,6 +1502,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.flysas.com/en/flexible-booking/',
                 destinationUrl: 'https://www.flysas.com/en/flexible-booking/',
+                url_match: 'https://www.flysas.com/en/flexible-booking/',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
