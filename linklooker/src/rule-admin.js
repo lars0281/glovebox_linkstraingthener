@@ -70,7 +70,7 @@ class NavigateCollectionUI {
         var column_conf = [];
         column_conf = [ {
                 "id": "1",
-                "json_path": "fulldomain",
+                "json_path": "url_match",
                 "presentation_format": "text"
             }, {
                 "id": "2",
@@ -122,7 +122,7 @@ class NavigateCollectionUI {
                 }
             },  {
                 "id": "3",
-                "json_path": "fulldomain",
+                "json_path": "notes",
                 "presentation_format": "text"
             },{
                 "id": "4",
@@ -162,8 +162,8 @@ class NavigateCollectionUI {
         // destinationDomainRule
         header_conf[0].text = "destinationDomainRule";
 
-        column_conf[0]["json_path"] = "destinationDomain";
-        column_conf[1].json_path = "steps";
+        // column_conf[0]["json_path"] = "destinationDomain";
+        // column_conf[1].json_path = "steps";
         // column_conf[2].node.text = "update this rule3";
  // column_conf[2].node["class"] = "update-rule";
         column_conf[3].node.subnodes[0]["EventListener"].func = "updateObject";

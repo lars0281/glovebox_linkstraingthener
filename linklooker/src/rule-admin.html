@@ -9,12 +9,54 @@
 		<link rel="stylesheet" href="rule-admin.css"/>
 	</head>
 	<body>
-	<!-- 
-		<script src="/utils/glovebox-basics.js"></script>
- -->
-		
+	<h2>introduction</h2>
+There has been a trend lately of obscuring the URL in web links. Where before the full URLs in all their gory details were available for inspection by the user before actually clicking on them. The URLs have been obscured behind link shorteners such as bit.ly and youtu.be   
+
+This is not just an annoyance for those who like to look before they jump, but also a serious security liability. 
+</br>
+Most users would not click on a link that read 
+</br>
+http://ww.hacker.com/download_malware.exe
+</br>
+But a link like 
+</br>
+https://bit.lt/eHfa0qeWrk
+</br>
+looks perfectly harmless. 
+</br>
+The web browser add-on Link Looker is designed to unravel what is behind those link shorteners in a safe way and give the user the option 
+to proceed directly to the true endpoint. 
+The second main functionality inside Link Looker is a toolset to compute the desired URL from the URL presented on the web page. 
+
+<p/>
+The need for this functionality was presented by a major social media platform. It deceptively presents the user, in the browser status bar, 
+with another URL than the one accessed when the link is clicked on. Standard browser functionality is that when the user lets the cursor hover over a link,
+ the actual URL contained in the link is shown in the browser status bar (bottom of browser page). 
+ But in this case the social media platform displays the url where the user will eventually end up, after having been first sent back to the social media platform itself. That the link the user actually accesses when clicking, is hidden from the user. 
+However, in this case the hidden URL also contains the final URL. The Link Looker add-on contains rules to re-write these URLs and present the user with the option to go directly to the correct page without having to stop by the social media platform and without having to encounter even more tracking cookies. 
 
 
+
+	<h2>how it works</h2>
+
+	<h3>what do you do</h3>
+
+Simply place the cursor over the link in question right click on the mouse. In the context menu selection "reveal true endpoint of this link"
+<br/>A small message box will appear where your cursor is. It will contain the endpoint of this URL. If there are any re-writing rules that pertain to this URL, they will have been applied. 
+You can click on this link directly. Some user may prefer to take he opoertinity open this link in a private browser window (righ-click in the link and select this option from context menu). The message box will close automatically after 30 seconds. 
+<h3>What happens</h3>
+
+
+	<h3>your options</h3>
+The rules according to which URLs are rewritten are all contained on this page. They can be amended, edited or deleted to suite your requirements. Additional explanation on who to do this are available.
+
+	<h2>link re-writing rules</h2>
+A principal part of the functionality in Link Looker is the ability to rewrite URL to both compute the true URL without having to call out to the URL and receive back a HTTP redirect. 
+But as important to remove unnecessary tracking and advertising information from URL. As browser cookies are becoming less reliable, more site are resorting to embedding the tracking information directly into the URLs. 
+The rewriting rules here will remove that tracking information without compromising user experience. 
+
+<p/>
+Rules are grouped according to source, on what page the links are found, and destination, where the links point to. But in all cases the rewriting applies to the where the link points to, not where it is from. 
 
 					<h3>Source Fulldomain Rule</h3>
 
@@ -30,11 +72,12 @@
 
 
 					<h3>destinationUrlRule</h3>
+					
 <div id="destinationUrlRule"></div>
 <button class="ll_button_boolean" id="hide_destinationUrlRule_button" bool="1" target_id="destinationUrlRule">hide table</button>
 <button class="ll_button_boolean" id="add_destinationUrlRule_button" bool="1" target_id="destinationUrlRule">add rule</button>
 
-	<!-- 
+	
 					<h3>destinationFulldomainRule</h3>
 <div id="destinationFulldomainRule"></div>
 <button class="ll_button_boolean" id="hide_destinationFulldomainRule_button" bool="1" target_id="destinationFulldomainRule">hide table</button>
@@ -46,6 +89,7 @@
 <button class="ll_button_boolean" id="add_destinationDomainRule_button" bool="1" target_id="destinationDomainRule">add rule</button>
 
 					<h3>sourceUrlRule</h3>
+					
 <div id="sourceUrlRule"></div>
 <button class="ll_button_boolean" id="hide_sourceUrlRule_button" bool="1" target_id="sourceUrlRule">hide table</button>
 
@@ -54,12 +98,13 @@
 <button class="ll_button_boolean" id="hide_sourceFulldomainRule_button" bool="1" target_id="sourceFulldomainRule">hide table</button>
 
 					<h3>sourceDomainRule</h3>
+					
 <div id="sourceDomainRule"></div>
 <button class="ll_button_boolean" id="hide_sourceDomainRule_button" bool="0" target_id="sourceDomainRule">hide table</button>
 
-  -->
+ 
 					<h3>backup</h3>
-
+Make a backup of all rewriting rules.
 <button class="ll_button" id="backup-all-rules_button">backup rules</button>
 
 					<h3>import</h3>
