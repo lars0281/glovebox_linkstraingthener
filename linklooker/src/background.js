@@ -65,7 +65,7 @@ let indexedDB;
 
 browser.contextMenus.create({
     id: "glovebox-link-reveal",
-    title: "reveal the true endpoint of URL",
+    title: "reveal the true endpoint of this link",
     contexts: ["link"]
 });
 
