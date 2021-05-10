@@ -1,19 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="edit-rule.css">
 
-<table border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td>
-            First Name:&nbsp;
-        </td>
-        <td>
-            <span id="lblFirstName"></span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Last Name:&nbsp;
-        </td>
-        <td>
-            <span id="lblLastName"></span>
-        </td>
-    </tr>
+<title>edit rule</title>
+</head>
+<body>
+<br>New Format
+
+
+
+<table class="single_rule_table">
+
+
+<tr class="table" id="url_match_table"><td>match url</td><td class="value" j_name="url_match">http://www.facebook.com/</td></tr>
+
+<tr class="table" id="scope_table"><td>scope</td><td class="value" j_name="scope">Fully qualified Domainname</td></tr>
+<tr class="table" id="direction_table"><td>direction</td><td class="value" j_name="direction">source</td></tr>
+<tr class="table" id="createtime_table"><td>createtime</td><td class="value" j_name="createtime"></td></tr>
+<tr class="table" id="lastmodifiedtime_table"><td>lastmodifiedtime</td><td class="value" j_name="lastmodifiedtime"></td></tr>
+<tr class="table" id="notes_table"><td>notes</td><td class="value" j_name="notes"></td></tr>
+
 </table>
+
+<button class="rulelevel_button" id="edit_rule_button">Edit Rule</button>
+<p/>
+Processing steps
+<p/>
+<table class="steps_table" j_name="steps">
+<tbody>
+<tr class="headers" ><th>step number</th><th >procedure</th><th >parameter and notes</th><th >step notes</th><th >actions</th></tr>
+
+<tr class="step_row">
+<td class="rank">1</td>
+<td class="procedure" j_name="procedure">regexp</td>
+<td class="parameters">
+<table class="parameters_table" j_name="parameters">
+<tr class="parameter"><td class="value" j_name="value">N/A</td><td class="notes" j_name="notes">N/A</td></tr>
+</table>
+</td>
+<td class="notes" j_name="notes">test</td>
+<td class="buttons">
+<button class="editstep_button" id="button_generate_default">edit</button>
+<button class="upstep_button" id="button_generate_default">up</button>
+<button class="deletestep_button" id="button_generate_default">delete</button>
+<button class="downstep_button" id="button_generate_default">down</button>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+<button class="rulelevel_button" id="button_addstep">add step</button>
+
+<button class="rulelevel_button" id="save_changes_button">Save changes</button>
+
+<script src="/popup/edit-rule.js"></script>
+</body>
+</html>

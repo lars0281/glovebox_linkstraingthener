@@ -10,7 +10,7 @@ var parentArray = [
 class NavigateCollectionUI {
     constructor(containerEl) {
 
-        console.log("### rule-admin.js ");
+       // console.log("### rule-admin.js ");
 
         this.containerEl = containerEl;
 
@@ -48,16 +48,19 @@ class NavigateCollectionUI {
         // setup column headers for table
         var header_conf = [];
         header_conf = [ {
-                "id": "2",
+                "id": "1",
                 "text": "domain"
             }, {
                 "id": "2",
                 "text": "steps"
             }, {
-                "id": "2",
+                "id": "5",
+                "text": "notes"
+            }, {
+                "id": "3",
                 "text": "ed. bttn"
             }, {
-                "id": "2",
+                "id": "4",
                 "text": "del. bttn"
             }
         ];
@@ -117,8 +120,12 @@ class NavigateCollectionUI {
                         }
                     ]
                 }
-            }, {
+            },  {
                 "id": "3",
+                "json_path": "fulldomain",
+                "presentation_format": "text"
+            },{
+                "id": "4",
                 "node": {
                     "name": "form",
                     "class": "edit-rule-form",
@@ -135,7 +142,7 @@ class NavigateCollectionUI {
                     ]
                 }
             }, {
-                "id": "4",
+                "id": "5",
                 "node": {
                     "name": "button",
                     "text": "delete",
@@ -150,7 +157,7 @@ class NavigateCollectionUI {
 
         ];
 
-        console.log(JSON.stringify(column_conf));
+        // console.log(JSON.stringify(column_conf));
 
         // destinationDomainRule
         header_conf[0].text = "destinationDomainRule";
@@ -159,11 +166,11 @@ class NavigateCollectionUI {
         column_conf[1].json_path = "steps";
         // column_conf[2].node.text = "update this rule3";
  // column_conf[2].node["class"] = "update-rule";
-        column_conf[2].node.subnodes[0]["EventListener"].func = "updateObject";
+        column_conf[3].node.subnodes[0]["EventListener"].func = "updateObject";
         // column_conf[3].node.text = "delete2";
    // column_conf[3].node["class"] = "update-rule";
-        column_conf[3].node["EventListener"].func = "deleteObject";
-        console.log(JSON.stringify(column_conf));
+        column_conf[4].node["EventListener"].func = "deleteObject";
+        // console.log(JSON.stringify(column_conf));
 
         try {
             setup_rule_table('destination', 'destinationDomainRule', document.getElementById("destinationDomainRule"), table_conf, header_conf, column_conf);
@@ -368,6 +375,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.google.com/',
                 sourceFulldomain: 'https://www.google.com/',
+                url_match: 'https://www.google.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -388,6 +398,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.facebook.com/',
                 sourceFulldomain: 'https://www.facebook.com/',
+                url_match: 'https://www.facebook.com/',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -405,6 +418,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceDomainRuleDB', 'sourceDomainRuleStore', 'keyId', {
                 keyId: 'google.com',
                 sourceDomain: 'google.com',
+                url_match: 'google.com',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -421,6 +437,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceDomainRuleDB', 'sourceDomainRuleStore', 'keyId', {
                 keyId: 'facebook.com',
                 sourceDomain: 'facebook.com',
+                url_match: 'facebook.com',
+                scope: 'Domain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -445,6 +464,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.imdb.com/',
                 sourceFulldomain: 'https://www.imdb.com/',
+                url_match: 'https://www.imdb.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -461,7 +483,10 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('sourceFulldomainRuleDB', 'sourceFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.linkedin.com/',
                 sourceFulldomain: 'https://www.linkedin.com/',
-                steps: [{
+                url_match: 'https://www.linkedin.com/',
+                scope: 'Fulldomain',
+                direction: 'source',
+                 steps: [{
                     procedure: "regexp",
                     parameters: [{
                             value: "s/(utm|hsa)_[a-z]*=[^&]*//g",
@@ -469,6 +494,14 @@ function generate_default_link_rules() {
                         }
                     ],
                     notes: "remove suspicious parameters from querystring"
+                },{
+                    procedure: "regexp",
+                    parameters: [{
+                            value: "s/[&]*li_fat_id=[^&]*//g",
+                            notes: "delete qs parameter with named li_fat_id"
+                        }
+                    ],
+                    notes: "remove extraneous parameter from querystring"
                 }
                 ],
                 notes: 'test',
@@ -477,6 +510,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationDomainRuleDB', 'destinationDomainRuleStore', 'keyId', {
                 keyId: 'ct.sendgrid.net',
                 destinationDomain: 'ct.sendgrid.net',
+                url_match: 'ct.sendgrid.net',
+                scope: 'Domain',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -493,6 +529,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'https://www.facebook.com/',
                 destinationFulldomain: 'https://www.facebook.com/',
+                url_match: 'https://www.facebook.com/',
+                scope: 'Fulldomain',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -509,6 +548,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'http://ad.doubleclick.net/',
                 destinationFulldomain: 'http://ad.doubleclick.net/',
+                url_match: 'http://ad.doubleclick.net/',
+                scope: 'Fulldomain',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -533,6 +575,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
             keyId: 'https://www.linkedin.com/',
             destinationFulldomain: 'https://www.linkedin.com/',
+            url_match: 'https://www.linkedin.com/',
+            scope: 'Fulldomain',
+            direction: 'destination',
             steps: [{
                 procedure: "regexp",
                 parameters: [{
@@ -561,6 +606,10 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationFulldomainRuleDB', 'destinationFulldomainRuleStore', 'keyId', {
                 keyId: 'https://ad.doubleclick.net',
                 destinationFulldomain: 'https://ad.doubleclick.net',
+                url_match: 'https://ad.doubleclick.net',
+                scope: 'Fulldomain',
+                direction: 'destination',
+                destinationFulldomain: 'https://ad.doubleclick.net',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -586,6 +635,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://l.facebook.com/l.php',
                 destinationUrl: 'https://l.facebook.com/l.php',
+                url_match: 'https://l.facebook.com/l.php',
+                 scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -610,6 +662,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.google.com/url',
                 destinationUrl: 'https://www.google.com/url',
+                url_match: 'https://www.google.com/url',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -633,6 +688,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://ideas-admin.lego.com/mailing/email_link',
                 destinationUrl: 'https://ideas-admin.lego.com/mailing/email_link',
+                url_match: 'https://ideas-admin.lego.com/mailing/email_link',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "qs_param",
                         parameters: [{
@@ -671,6 +729,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://dagsavisen.us11.list-manage.com/track/click',
                 destinationUrl: 'https://dagsavisen.us11.list-manage.com/track/click',
+                url_match: 'https://dagsavisen.us11.list-manage.com/track/click',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "replace_with",
                         parameters: [{
@@ -693,6 +754,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.youtube.com/watch',
                 destinationUrl: 'https://www.youtube.com/watch',
+                url_match: 'https://www.youtube.com/watch',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -709,6 +773,9 @@ function generate_default_link_rules() {
         p.push(saveToIndexedDB_async('destinationUrlRuleDB', 'destinationUrlRuleStore', 'keyId', {
                 keyId: 'https://www.flysas.com/en/flexible-booking/',
                 destinationUrl: 'https://www.flysas.com/en/flexible-booking/',
+                url_match: 'https://www.flysas.com/en/flexible-booking/',
+                scope: 'Url',
+                direction: 'destination',
                 steps: [{
                         procedure: "regexp",
                         parameters: [{
@@ -863,7 +930,6 @@ function setup_rule_table(type, key, node, t, h, c) {
             table_obj.setAttribute("cellpadding", "0");
             table_obj.setAttribute("class", "scrollTable");
             table_obj.setAttribute("width", "100%");
-
             table_obj.setAttribute("id", key);
 
             // for (var i = 0; i < table_conf.length; i++) {
@@ -1120,7 +1186,9 @@ function writeTableHeaderRow(row_conf, table_id) {
             // N for numbers
             // a_ref.setAttribute("href", "javascript:SortTable("+i+",'T'," +
             // table_id +");");
-            i_col.innerHTML = obj.text;
+            // i_col.innerHTML = obj.text;
+            i_col.appendChild(document.createTextNode(obj.text));
+
 
             // create event listener to trigger sorting on the column
             i_col.addEventListener('click', function (event) {
@@ -1219,7 +1287,8 @@ function writeTableRow(rule, column_conf, type, key) {
                 // console.log(url[obj.attribute]);
               // console.log(obj.attribute);
                 if (presentation_format == "JSON") {
-                    i_col.innerHTML = JSON.stringify(cell_data);
+// i_col.innerHTML = JSON.stringify(cell_data);
+                    i_col.appendChild(document.createTextNode(JSON.stringify(cell_data)));
                 } else if (presentation_format == "table") {
                     // render a table inside the cell based on the detailed
                     // specifications contained in the "cell_table_column_conf"
@@ -1305,14 +1374,10 @@ function writeTableRow(rule, column_conf, type, key) {
                                     var newContent = document.createTextNode(cell_data_row[cell_data_path]);
                                     cell_table_cell.appendChild(newContent);
                               }
-
-
                                 } catch (e) {
                                 	consoel.log(e);
                                 }
-
                                 cell_table_row.appendChild(cell_table_cell);
-
                                 m++
                             }
 
@@ -1330,7 +1395,8 @@ function writeTableRow(rule, column_conf, type, key) {
                     // render a dropdown list
 
                 } else {
-                    i_col.innerHTML = rule[obj.json_path];
+                	  i_col.appendChild(document.createTextNode(rule[obj.json_path]));
+                    // i_col.innerHTML = rule[obj.json_path];
                 }
             } else if (obj.hasOwnProperty('node')) {
 
@@ -1512,124 +1578,37 @@ function updateObject(uuid, type, key, rule) {
         // open up the popup
 
 
-        var popup_html = "";
-        popup_html = popup_html + '<html><head><meta http-equiv="Content-Security-Policy" content="default-src *; style-src ' + "'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'" + ">";
+   
 
-        popup_html = popup_html + '<meta charset="utf-8"/><link rel="stylesheet" href="rule-edit.css"/></head><title>edit rule</title><body>some';
+        // var w = window.open('', '',
+		// 'width=1000,height=700,resizeable,scrollbars');
+        
+     // place the rule to be edited in storage
+        
+        browser.storage.sync.set({ 'editThisRule': rule, 'type': type, 'key': key }).then(function(g){
+        	console.log(g);
+        	});
+        
+        var w = window.open('popup/edit-rule.html', 'test01', 'width=1000,height=600,resizeable,scrollbars');
+        // the popup is now open
 
-        popup_html = popup_html + JSON.stringify(rule);
+        console.log("read back: " + browser.storage.sync.get(['editThisRule', 'type', 'key']));
+        browser.storage.sync.get(['editThisRule', 'type', 'key']).then(function(e){
+        	console.log(e);
+        	});
 
-        popup_html = popup_html + '<br/> dynamically extend the list of steps, reorder, modify or delete';
-
-        popup_html = popup_html + '<table class="single_rule_table">';
-
-        popup_html = popup_html + '<tr class="table"><th>rule</th></tr>';
-
-        // URL
-        if (type == 'destination') {
-
-            // scope
-            if (/Fulldomain/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>destination url</td><td class="value">' + rule.destinationFulldomain + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Fully qualified Domainname</td></tr>';
-            } else if (/Domain/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>destination url</td><td class="value">' + rule.destinationDomain + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Domain</td></tr>';
-            } else if (/Url/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>destination url</td><td class="value">' + rule.destinationUrl + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Complete Url</td></tr>';
-            }
-
-        } else {
-            if (/Fulldomain/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>source url</td><td class="value">' + rule.sourceFulldomain + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Fully qualified Domainname</td></tr>';
-            } else if (/Domain/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>source url</td><td class="value">' + rule.sourceDomain + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Domain</td></tr>';
-            } else if (/Url/.test(key)) {
-                popup_html = popup_html + '<tr class="table"><td>source url</td><td class="value">' + rule.sourceUrl + '</td></tr>';
-
-                popup_html = popup_html + '<tr class="table"><td>scope</td><td class="value">Complete Url</td></tr>';
-
-            }
-        }
-
-        popup_html = popup_html + '<tr class="table"><td>step number</td><td class="value"></td></tr>';
-
-        // loop through all steps and write one line in the table for each
-        popup_html = popup_html + JSON.stringify(rule.steps);
-        popup_html = popup_html + "STEPS:" + rule.steps;
-
-        console.log(rule.steps);
-
-        for (var i = 0; i < rule.steps.length; i++) {
-            console.log(rule.steps[i]);
-
-
-            popup_html = popup_html + "STEPS:" + rule.steps[i];
-            
-            popup_html = popup_html + '<tr class="step_row"><td class="rank">' + (i + 1) + '</td>';
-// each step has three editable field, the produdure (which is a drop-down
-// list);
-            popup_html = popup_html + '<td class="steps">' + rule.steps[i].procedure + '</td>';
-
-         // the parameter (which is disabled for some procedures) and notes,
-			// which
-         // is a freely editable text field.
-            // assume, for now, only one parameter is allowed
-            popup_html = popup_html + '<td class="parameters">' + rule.steps[i].parameters[0] + '</td>';
-
-         // and notes, which is a freely editable text field.
-            popup_html = popup_html + '<td class="notes">' + rule.steps[i].notes + '</td>';
-
-            popup_html = popup_html + '<td class="buttons">';
-
-            // edit
-            popup_html = popup_html + '<button class="editstep_button" id="button_generate_default">edit</button>';
-            // move step up in execution order
-            popup_html = popup_html + '<button class="upstep_button" id="button_generate_default">up</button>';
-            // delete step
-            popup_html = popup_html + '<button class="deletestep_button" id="button_generate_default">delete</button>';
-            // move step down in execution order
-            popup_html = popup_html + '<button class="downstep_button" id="button_generate_default">down</button>';
-
-            popup_html = popup_html + '</td></tr>';
-
-        }
+        console.log("read back: " + browser.storage.sync.get(['editThisRule', 'type', 'key'], function (data){
+        	console.log(data);
+        } ));
+        
+        // send message to background, and have background send it to the popup
+        browser.runtime.sendMessage({
+            request: {"sendRule":"toEditPopup","rule": rule}
+        }, function (response) {
+            console.log("message sent to backgroup.js with response: " + JSON.stringify(response));
+        });
         
 
-        // add buttons to edit, delete, move up, move down
-
-        // one blank line where a new step can be added
-        // provide a meaningfull sample value
-        popup_html = popup_html + '<tr class="blank"><td>' + '</td><td class="value">' + 'sample' + '</td><td><button class="addstep_button" id="button_addstep">add this step</button></td></tr>';
-        // add one more row at the end to contain additional control button in
-        // the future
-        // popup_html= popup_html +'<tr ><td></td><td ></td><td></td></tr>';
-
-        popup_html = popup_html + '</table>';
-
-        popup_html = popup_html + '<button class="save_rule_button" id="save_changes_button">Save changes</button>';
-
-        popup_html = popup_html + '<script src="/popup/edit-rule.js"></script>';
-
-        popup_html = popup_html + '</body>';
-
-        var w = window.open('', '', 'width=1000,height=700,resizeable,scrollbars');
-        // write page html to popup
-        w.document.write(popup_html);
-
-        w.document.close(); // needed for chrome and safari
-
-
-        // send the rule to the popup for dispay.
-        console.log(w);
 
     } catch (err) {
         console.error(err);

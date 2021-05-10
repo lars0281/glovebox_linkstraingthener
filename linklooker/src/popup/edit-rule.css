@@ -1,31 +1,271 @@
-html, body {
-  width: 2100px;
+
+
+/* Terence Ordona, portal[AT]imaputz[DOT]com         */
+/* http://creativecommons.org/licenses/by-sa/2.0/ 
+http://www.imaputz.com/cssStuff/bigFourVersion.html   */
+
+
+
+/*
+The steps are listed in a tables with 6 columns 
+
+In order they are: (pix width in parentesis)
+
+step number (20)
+procedure ()
+parameter and notes (120)
+notes for the step ()
+action buttons (60)
+
+
+*/
+
+
+/* table headers for steps table*/
+
+
+
+table.steps_table tr.headers th+th+th+th {
+	background: #DDD;
+	width: 50px
 }
 
-.hidden {
-  display: none;
+table.steps_table tr.headers th+th+th+th+th {
+	background: #DDD;
+	width: 50px
 }
 
-.button {
-  margin: 3% auto;
-  padding: 4px;
-  text-align: center;
-  font-size: 1.5em;
-  cursor: pointer;
+
+
+
+
+/* begin some basic styling here                     */
+body {
+	background: #EEE;
+	color: #111;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 10px;
+	padding: 0
 }
 
-.beast:hover {
-  background-color: #CFF2F2;
+table {
+	background: #EEE;
 }
 
-.beast {
-  background-color: #E5F2F2;
+table, a {
+	color: #000;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif
 }
 
-.reset {
-  background-color: #FBFBC9;
+td {
+	background: #EEE;
+	color: #000;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	border-bottom: 1px solid #000;
+	border-right: 1px solid #000;
+	
+	
 }
 
-.reset:hover {
-  background-color: #EAEA9D;
+
+td.steps {
+	background: #FFF;
+	width: 300px
 }
+
+td.step {
+	background: #EEE;
+	width: 300px
+}
+
+td.edit {
+	background: #FFF;
+	width: 300px
+}
+
+tr.table {
+	background: #EEE;
+}
+
+
+td.rank {
+	background: #EEE;
+	width: 50px
+}
+
+/* rule notes */
+#notes_table td.value {
+	background: #EEE;
+	border: 1px solid #963;
+}
+
+#notes_table td.value_editable {
+	background: #FFF;
+	border: 1px solid #963;
+}
+
+
+
+/* step number column*/
+/* header*/
+table.steps_table tr.headers th {
+	background: #DDD;
+	width: 50px
+}
+
+
+/* step procedure column*/
+/* header*/
+table.steps_table tr.headers th+th {
+	background: #DDD;
+	width: 20px
+}
+
+
+table.steps_table tr.step_row td.procedure_editable {
+	background: #FFF;
+	border: 1px solid #963;
+	width: 100px
+}
+
+table.steps_table tr.step_row td.procedure {
+	background: #EEE;
+	border: 1px solid #963;
+	width: 100px
+}
+
+
+/* step notes column*/
+/* header*/
+table.steps_table tr.headers th+th+th+th {
+	background: #DDD;
+	width: 200px
+}
+
+
+table.steps_table tr.step_row td.notes_editable {
+	background: #FFF;
+	border: 1px solid #963;
+	width: 1000px
+}
+
+table.steps_table tr.step_row td.notes {
+	background: #EEE;
+	border: 1px solid #963;
+	width: 1000px
+}
+
+
+/* step parameters column*/
+/* header*/
+table.steps_table tr.headers th+th+th {
+	background: #DDD;
+	width: 120px
+}
+
+
+/* table containing parameters for a function */
+table.parameters_table {
+	clear: both;
+	border: 1px solid #963;
+	height: 35px;
+	overflow: auto;
+	width: 215px
+}
+
+
+/* parameter value - non editable
+*/
+
+tr.parameter td.value {
+	background: #EEE;
+	border: 1px solid #963;
+	width: 100px
+}
+
+/* parameter value - editable
+*/
+
+tr.parameter td.value_editable {
+	background: #FFF;
+	border: 1px solid #963;
+	width: 100px
+}
+
+/* parameter notes - non editable
+*/
+
+tr.parameter td.notes {
+	background: #EEE;
+	border: 1px solid #963;
+	width: 100px
+}
+
+/* parameter notes - editable
+*/
+
+tr.parameter td.notes_editable {
+	background: #FFF;
+	border: 1px solid #963;
+	width: 100px
+}
+
+
+
+
+
+td.buttons {
+	background: #EEE;
+	width: 130px
+}
+
+h1 {
+	font: normal normal 18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h2 {
+	font: normal normal 16px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+
+button.rulelevel_button {
+	font: normal normal 10px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0;
+	width: 120px;
+	float: left;
+  border: 1px solid green
+}
+
+
+button.editsteps_button {
+	font: normal normal 10px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0;
+	width: 60px;
+	float: left;
+  border: 1px solid green
+}
+
+
+h3 {
+	font: normal normal 13px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #008000;
+	margin: 0 0 15px 0
+}
+
+/* end basic styling                                 */
+
+
+
+/* */
+table.single_rule_table {
+	clear: both;
+	border: 1px solid #963;
+	height: 185px;
+	overflow: auto;
+	width: 600px
+}
+
+
+
